@@ -4,6 +4,10 @@
 
 * useForm is a custom hook that contains a function that will be called when you click on the submit button, and will handle onSumbit and onchange functions.
 
+## Netlify
+
+https://6285342bdc7b4f153caa9740--bespoke-starship-5ddbaf.netlify.app/
+
 ## UML
 
 ![image](./assets/lab32.png)
