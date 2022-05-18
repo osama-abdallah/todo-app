@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from 'react';
-export const settingsContext = React.createContext();
-export default function Settings(props) {
-    const [stateSettings, setStateSetting] = useState({
-        displayCompleted: false,
-        pageLimit: 4
-    });
-    const[submitFlag, setSubmitFlag] = useState(false);
+export const settingContext = React.createContext();
 
-    useEffect(() => {
-        setStateSetting(JSON.parse(localStorage.getItem('pageSettingsContext')) || stateSettings);
-        console.log(stateSettings);
-    },[submitFlag]);
-    const state = {
-        displayCompleted: stateSettings.displayCompleted,
-        pageLimit: stateSettings.pageLimit,
-        submitFlag,
-        setSubmitFlag
+function SettingContext(props) {
+  const [itemPerPage, setItemPerPage] = useState(3);
+  const [showCompleted, setShowCompleted] = useState(true);
+
+  const state = {
+    itemPerPage,
+    showCompleted,
+    setItemPerPage,
+    setShowCompleted,
+  }
+  
+  useEffect(() => {
+    const localSettings = JSON.parse(localStorage.getItem('settings'));
+    if (localSettings) {
+      setItemPerPage(Number(localSettings.itemPerPage));
+      setShowCompleted(showCompleted);
     }
-    return (
-        <settingsContext.Provider value={state}>
-            {props.children}
-        </settingsContext.Provider>
-    )
+  }, [])
+
+  useEffect(() => {
+    console.log(itemPerPage);
+  }, [itemPerPage])
+
+  return (
+    <settingContext.Provider value={state}>
+      {props.children}
+    </settingContext.Provider>
+  )
 }
+
+export default SettingContext
