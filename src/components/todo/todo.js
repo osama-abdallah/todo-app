@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Form from '../form/form';
-
+import {When} from 'react-if'
 import List from '../list/list';
+import { AuthContext } from '../../context/auth';
+import Login from '../login/login';
+import SignUp from '../signup/signup';
 import { v4 as uuid } from 'uuid';
 import "@blueprintjs/core/lib/css/blueprint.css";
 
 
 const ToDo = () => {
+  const logging = useContext(AuthContext)
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
@@ -16,15 +20,11 @@ const ToDo = () => {
     setList([...list, data]);
   }
 
-  // function deleteItem(id) {
-  //   const items = list.filter( item => item.id !== id );
-  //   setList(items);
-  // }
 
   function toggleComplete(id) {
 
     const items = list.map(item => {
-      if (item.id == id) {
+      if (item.id === id) {
         item.complete = !item.complete;
       }
       return item;
@@ -43,8 +43,18 @@ const ToDo = () => {
   return (
     <>
       <h1>To Do List: {incomplete} Items Pending</h1>
+      <div id='container'>
+        <When condition ={logging.loggedIn}>
+
       <Form addItem={addItem} />
       <List list={list} toggleComplete={toggleComplete} />
+    
+      </When>
+      <When condition = {!logging.loggedIn}>
+        <Login/>
+        <SignUp/>
+      </When>
+    </div>
     </>
   );
 };
