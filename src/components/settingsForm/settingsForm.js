@@ -34,7 +34,7 @@ function SettingsForm() {
 
     return (
         <div>
-            <form onSubmit={(e) => { handleSubmit(e) }}>
+            <form id='settingsForm' onSubmit={(e) => { handleSubmit(e) }}>
                 <label>Number of items shown per page</label>
                 <input name='items' type='number' placeholder={1} value={numOfitems} min={1} onChange={handleItemNumber}></input>
                 <label>View completed items</label>

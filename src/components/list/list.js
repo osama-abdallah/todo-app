@@ -12,7 +12,7 @@ function List(props) {
         let end = start + settingsContext.itemPerPage;
         setNumOfPages(Math.ceil(props.list.length/settingsContext.itemPerPage)); 
         setActiveList(props.list.slice(start,end)); 
-    },[props.list.length]);
+    },[props.list.length,settingsContext]);
 
     useEffect(()=>{
         if(settingsContext.showCompleted){
@@ -48,7 +48,7 @@ function List(props) {
     }
 
     return (
-        <div>
+        <div id='itemCont'>
             <button onClick={toggleView} >View Completed: {settingsContext.showCompleted.toString()}</button>
             {activeList.map(item => (
         <div key={item.id}>

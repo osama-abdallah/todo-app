@@ -1,12 +1,12 @@
 import React from 'react'
 import useForm from '../../hooks/form';
 import { Button } from "@blueprintjs/core";
-
+import SettingsForm from '../settingsForm/settingsForm';
 function Form(props) {
   const { handleChange, handleSubmit } = useForm(props.addItem);
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div id='formContainer'>
+      <form id='form' onSubmit={handleSubmit}>
 
         <h2>Add To Do Item</h2>
 
@@ -29,6 +29,7 @@ function Form(props) {
           <Button type="submit">Add Item</Button>
         </label>
       </form>
+      <SettingsForm/>
     </div>
   )
 }
