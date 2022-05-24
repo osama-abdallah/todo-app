@@ -18,8 +18,9 @@ function Auth(props) {
 
   function validateToken(token) {
     try {
-      const user = jwt(token);
-      if (user) setLoginState(true, token, user);
+      const user = jwt(token.token);
+
+      if (user) setLoginState(true, token, token);
     } catch (error) {
       setLoginState(false, null, {});
       console.log(`Token Validation Error ${error.message}`);
@@ -28,22 +29,17 @@ function Auth(props) {
 
   function setLoginState(loggedIn, token, user) {
 		cookie.save('auth', token);
-		setUser({ user });
+		setUser(user );
 		setLoggedIn(loggedIn);
 	}
 
-  function setLogoutState(loggedIn, user) {
-		cookie.save('auth', null);
-		setUser({ user });
-		setLoggedIn(loggedIn);
-	}
 
   async function login(username, password) {
 		try {
 			const response = await superagent
 				.post(`${API}signin`)
 				.set('authorization', `Basic ${base64.encode(`${username}:${password}`)}`);
-			validateToken(response.body.token);
+			validateToken(response.body);
 		} catch (error) {
 			console.error('Signin Error', error.message);
 		}
@@ -57,16 +53,17 @@ function Auth(props) {
 				role,
 			});
 
-			// validateToken(response.body.token);
+
 		} catch (error) {
 			console.error('Signup Error', error.message);
 		}
 	}
 
   function logout() {
-		setLogoutState(false, {});
-	}
-
+setLoggedIn(false)
+setUser({})
+cookie.remove("auth")
+  }
   const state = {
 		loggedIn,
 		user,

@@ -9,9 +9,11 @@ const Auth=(props)=> {
     let render = false;
 
    try {
+     console.log(contextType.user)
      render = contextType.loggedIn && props.capability
-     ? contextType.user.capabilities.includes(props.capability)
+     ? contextType?.user?.actions?.includes(props.capability)
      : false;
+     console.log(render);
    } catch (error) {
     console.log('NOT AUTHORIZED', error.message);
 
