@@ -12,14 +12,13 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 const ToDo = () => {
   const logging = useContext(AuthContext)
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(JSON.parse(localStorage.getItem('tasks'))||[]);
   const [incomplete, setIncomplete] = useState([]);
 
   function addItem(item) {
     let data = { id: uuid(), text: item.text, assignee: item.assignee, complete: false, difficulty: item.difficulty }
     setList([...list, data]);
   }
-
 
   function toggleComplete(id) {
 
@@ -33,11 +32,16 @@ const ToDo = () => {
     setList(items);
 
   }
+  function deleteItem(id) {
+    const items = list.filter( item => item.id !== id );
+    setList(items);
+  }
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
+    localStorage.setItem('tasks',JSON.stringify(list))
   }, [list]);
 
   return (
@@ -47,7 +51,7 @@ const ToDo = () => {
         <When condition ={logging.loggedIn}>
 
       <Form addItem={addItem} />
-      <List list={list} toggleComplete={toggleComplete} />
+      <List deleteItem={deleteItem} list={list} toggleComplete={toggleComplete} />
     
       </When>
       <When condition = {!logging.loggedIn}>

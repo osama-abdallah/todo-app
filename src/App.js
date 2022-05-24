@@ -9,8 +9,8 @@ import "./App.scss"
 function App() {
   return (
    <>
-      <Header />
       <Auth>
+      <Header />
         <SettingProvider>
           {/* <Route exact path='/settings' > */}
             {/* <SettingsForm /> */}
