@@ -6,7 +6,7 @@
 
 ## Netlify
 
-https://6285342bdc7b4f153caa9740--bespoke-starship-5ddbaf.netlify.app/
+https://bespoke-starship-5ddbaf.netlify.app/
 
 ## UML
 
